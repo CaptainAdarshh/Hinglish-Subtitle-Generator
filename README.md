@@ -58,7 +58,7 @@ python --version
 ### 2. Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/hinglish-subtitle-generator.git
+git clone https://github.com/CaptainAdarshh/Hinglish-Subtitle-Generator.git
 
 cd hinglish-subtitle-generator
 ```
