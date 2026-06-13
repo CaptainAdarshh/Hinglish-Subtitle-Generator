@@ -73,7 +73,10 @@ cd hinglish-subtitle-generator
 ```bash
 pip install -r requirements.txt
 ```
+
 ## Optional: GPU Acceleration (NVIDIA)
+
+For NVIDIA GPU acceleration instructions, see utilize_gpu.txt.
 
 This project runs on CPU by default.
 
@@ -104,6 +107,7 @@ GPU acceleration can significantly reduce transcription time compared to CPU exe
 - NVIDIA GPU
 - CUDA installed and working
 - Compatible PyTorch/CUDA environment
+
 ---
 
 ## Project Structure
