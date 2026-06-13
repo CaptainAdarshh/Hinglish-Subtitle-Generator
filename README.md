@@ -119,7 +119,7 @@ hinglish-subtitle-generator/
 ├── requirements.txt
 ├── README.md
 ├── LICENSE
-└── reel.mp4
+└── your_video.mp4
 ```
 
 ---
@@ -165,7 +165,7 @@ After the model is downloaded, the script can run offline.
 After processing completes:
 
 ```text
-reel.srt
+your_video.srt
 ```
 
 will be generated automatically.
