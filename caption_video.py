@@ -1,11 +1,26 @@
+import sys
+import os
+
 from faster_whisper import WhisperModel
 from indic_transliteration import sanscript
 from indic_transliteration.sanscript import transliterate
 
-VIDEO = "reel.mp4"
-OUTPUT_SRT = "reel.srt"
 
 WORDS_PER_CAPTION = 3
+
+
+if len(sys.argv) < 2:
+    print("Usage:")
+    print("python caption_video.py <video_file>")
+    sys.exit(1)
+
+VIDEO = sys.argv[1]
+
+if not os.path.exists(VIDEO):
+    print(f"File not found: {VIDEO}")
+    sys.exit(1)
+
+OUTPUT_SRT = os.path.splitext(VIDEO)[0] + ".srt"
 
 
 def format_time(seconds):
@@ -17,11 +32,15 @@ def format_time(seconds):
     return f"{hrs:02}:{mins:02}:{secs:02},{ms:03}"
 
 
+print("Loading Whisper model...")
+
 model = WhisperModel(
     "large-v3",
     device="cpu",
     compute_type="int8"
 )
+
+print(f"Processing: {VIDEO}")
 
 segments, info = model.transcribe(
     VIDEO,
@@ -85,4 +104,4 @@ with open(OUTPUT_SRT, "w", encoding="utf-8") as f:
 
             subtitle_index += 1
 
-print("Done!")
+print(f"Done! Subtitle saved as: {OUTPUT_SRT}")
