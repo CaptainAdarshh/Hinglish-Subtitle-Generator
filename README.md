@@ -122,17 +122,23 @@ hinglish-subtitle-generator/
 
 ## Usage
 
-Place your video file inside the project folder and name it:
-
-```text
-reel.mp4
-```
+Place your video file inside the project folder.
 
 Run:
 
 ```bash
-python caption_video.py
+python caption_video.py your_video.mp4
 ```
+
+Examples:
+
+```bash
+python caption_video.py reel.mp4
+
+python caption_video.py podcast.mp4
+```
+
+The generated subtitle file will automatically use the same filename as the input video.
 
 ---
 
