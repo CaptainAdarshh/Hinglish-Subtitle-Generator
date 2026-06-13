@@ -48,7 +48,7 @@ Download CUDA Toolkit:
 
 https://developer.nvidia.com/cuda-downloads
 
-Install the version recommended for your operating system.
+Install the version recommended for your operating system(probably v12.6).
 
 After installation, verify:
 
