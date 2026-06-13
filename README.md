@@ -17,6 +17,11 @@ https://github.com/user-attachments/assets/c20b1a2a-946a-45ce-822f-af76f5041b4e
 - Adjustable words per caption
 - Works offline after the initial model download
 
+> **Note**
+>
+> This project is configured to run on **CPU by default** for maximum compatibility.
+> If you have an NVIDIA GPU with CUDA installed, you can modify the script to use GPU acceleration for significantly faster transcription.
+
 ---
 
 ## Example
@@ -58,7 +63,7 @@ python --version
 ### 2. Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/hinglish-subtitle-generator.git
+git clone https://github.com/CaptainAdarshh/Hinglish-Subtitle-Generator.git
 
 cd hinglish-subtitle-generator
 ```
@@ -68,7 +73,37 @@ cd hinglish-subtitle-generator
 ```bash
 pip install -r requirements.txt
 ```
+## Optional: GPU Acceleration (NVIDIA)
 
+This project runs on CPU by default.
+
+If you have an NVIDIA GPU and CUDA installed, you can enable GPU acceleration by changing:
+
+```python
+model = WhisperModel(
+    "large-v3",
+    device="cpu",
+    compute_type="int8"
+)
+```
+
+to:
+
+```python
+model = WhisperModel(
+    "large-v3",
+    device="cuda",
+    compute_type="float16"
+)
+```
+
+GPU acceleration can significantly reduce transcription time compared to CPU execution.
+
+### Requirements
+
+- NVIDIA GPU
+- CUDA installed and working
+- Compatible PyTorch/CUDA environment
 ---
 
 ## Project Structure
@@ -87,17 +122,23 @@ hinglish-subtitle-generator/
 
 ## Usage
 
-Place your video file inside the project folder and name it:
-
-```text
-reel.mp4
-```
+Place your video file inside the project folder.
 
 Run:
 
 ```bash
-python caption_video.py
+python caption_video.py your_video.mp4
 ```
+
+Examples:
+
+```bash
+python caption_video.py reel.mp4
+
+python caption_video.py podcast.mp4
+```
+
+The generated subtitle file will automatically use the same filename as the input video.
 
 ---
 
