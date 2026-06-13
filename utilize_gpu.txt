@@ -1,0 +1,200 @@
+GPU ACCELERATION GUIDE
+======================
+
+This project runs on CPU by default for maximum compatibility.
+
+If you have an NVIDIA GPU, you can significantly speed up subtitle generation by enabling CUDA acceleration.
+
+------------------------------------------------------------
+STEP 1: VERIFY NVIDIA GPU
+------------------------------------------------------------
+
+Open Command Prompt and run:
+
+nvidia-smi
+
+If you see your GPU information, you are ready to continue.
+
+Example:
+
+NVIDIA GeForce RTX 4060
+CUDA Version: 12.x
+
+If you receive an error such as:
+
+'nvidia-smi' is not recognized
+
+install the NVIDIA drivers first.
+
+------------------------------------------------------------
+STEP 2: INSTALL NVIDIA DRIVERS
+------------------------------------------------------------
+
+Download and install the latest NVIDIA driver for your GPU:
+
+https://www.nvidia.com/Download/index.aspx
+
+Restart your computer after installation.
+
+Verify:
+
+nvidia-smi
+
+------------------------------------------------------------
+STEP 3: INSTALL CUDA TOOLKIT
+------------------------------------------------------------
+
+Download CUDA Toolkit:
+
+https://developer.nvidia.com/cuda-downloads
+
+Install the version recommended for your operating system.
+
+After installation, verify:
+
+nvcc --version
+
+or
+
+nvidia-smi
+
+------------------------------------------------------------
+STEP 4: INSTALL PROJECT DEPENDENCIES
+------------------------------------------------------------
+
+Install required Python packages:
+
+pip install -r requirements.txt
+
+or
+
+pip install faster-whisper indic-transliteration
+
+------------------------------------------------------------
+STEP 5: MODIFY THE SCRIPT
+------------------------------------------------------------
+
+Open:
+
+caption_video.py
+
+Find:
+
+model = WhisperModel(
+    "large-v3",
+    device="cpu",
+    compute_type="int8"
+)
+
+Replace it with:
+
+model = WhisperModel(
+    "large-v3",
+    device="cuda",
+    compute_type="float16"
+)
+
+------------------------------------------------------------
+STEP 6: RUN THE SCRIPT
+------------------------------------------------------------
+
+Example:
+
+python caption_video.py myvideo.mp4
+
+The script should now use your GPU.
+
+------------------------------------------------------------
+VERIFY GPU USAGE
+------------------------------------------------------------
+
+Open another Command Prompt and run:
+
+nvidia-smi
+
+While transcription is running, GPU memory usage should increase.
+
+------------------------------------------------------------
+LOW VRAM GPUS
+------------------------------------------------------------
+
+For GPUs with limited VRAM, use:
+
+model = WhisperModel(
+    "large-v3",
+    device="cuda",
+    compute_type="int8_float16"
+)
+
+This reduces GPU memory usage.
+
+------------------------------------------------------------
+RECOMMENDED SETTINGS
+------------------------------------------------------------
+
+RTX 3060 and above:
+
+model = WhisperModel(
+    "large-v3",
+    device="cuda",
+    compute_type="float16"
+)
+
+Low VRAM GPUs:
+
+model = WhisperModel(
+    "large-v3",
+    device="cuda",
+    compute_type="int8_float16"
+)
+
+------------------------------------------------------------
+OPTIONAL AUTO GPU DETECTION
+------------------------------------------------------------
+
+Advanced users can replace the model initialization with:
+
+from faster_whisper import WhisperModel
+import torch
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+compute_type = (
+    "float16"
+    if device == "cuda"
+    else "int8"
+)
+
+model = WhisperModel(
+    "large-v3",
+    device=device,
+    compute_type=compute_type
+)
+
+print(f"Using device: {device}")
+
+This automatically uses GPU when available and falls back to CPU otherwise.
+
+If you use this method, add:
+
+torch
+
+to requirements.txt
+
+Example:
+
+faster-whisper
+indic-transliteration
+torch
+
+------------------------------------------------------------
+IMPORTANT NOTE
+------------------------------------------------------------
+
+GPU acceleration requires:
+
+- NVIDIA GPU
+- CUDA installed correctly
+- Compatible drivers
+
+AMD and Intel GPUs are not officially supported by Faster Whisper CUDA acceleration.
