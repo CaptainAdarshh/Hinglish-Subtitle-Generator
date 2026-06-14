@@ -7,7 +7,7 @@ Generate Hinglish (Roman Hindi) subtitles automatically from Hindi videos using 
 ### Input Video
 https://github.com/user-attachments/assets/b0c5bfc8-b5b5-401c-86b8-4cd9545fbf3b
 
-### Output Srt
+### Output Srt(with errors fixed through ChatGPT)
 https://github.com/user-attachments/assets/c20b1a2a-946a-45ce-822f-af76f5041b4e
 
 ---
